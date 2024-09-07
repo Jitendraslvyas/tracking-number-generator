@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrackingNumberServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tracking-number-generator</a> &gt; <a href="index.source.html" class="el_package">com.getrosoft.service.impl</a> &gt; <span class="el_source">TrackingNumberServiceImpl.java</span></div><h1>TrackingNumberServiceImpl.java</h1><pre class="source lang-java linenums">package com.getrosoft.service.impl;
+
+import com.getrosoft.model.entity.TrackingNumber;
+import com.getrosoft.repository.TrackingNumberRepository;
+import com.getrosoft.service.TrackingNumberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+@Service
+@Transactional
+<span class="fc" id="L15">public class TrackingNumberServiceImpl implements TrackingNumberService {</span>
+
+    @Autowired
+    private TrackingNumberRepository trackingNumberRepository;
+
+    private String generateUniqueTrackingNumber() {
+        String trackingNumber;
+        do {
+<span class="fc" id="L23">            trackingNumber = UUID.randomUUID().toString().replace(&quot;-&quot;, &quot;&quot;).substring(0, 16).toUpperCase();</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        } while (trackingNumberRepository.existsByTrackingNumber(trackingNumber));</span>
+
+<span class="fc" id="L26">        return trackingNumber;</span>
+    }
+
+    @Override
+    public TrackingNumber createTrackingNumber(UUID customerId) {
+<span class="fc" id="L31">        TrackingNumber trackingNumber = new TrackingNumber(null, customerId, generateUniqueTrackingNumber(), OffsetDateTime.now());</span>
+<span class="fc" id="L32">        return trackingNumberRepository.save(trackingNumber);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

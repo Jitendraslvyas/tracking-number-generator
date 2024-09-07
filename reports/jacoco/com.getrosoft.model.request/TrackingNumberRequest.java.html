@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrackingNumberRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tracking-number-generator</a> &gt; <a href="index.source.html" class="el_package">com.getrosoft.model.request</a> &gt; <span class="el_source">TrackingNumberRequest.java</span></div><h1>TrackingNumberRequest.java</h1><pre class="source lang-java linenums">package com.getrosoft.model.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.*;
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+<span class="pc bnc" id="L12" title="All 62 branches missed.">@Data</span>
+<span class="nc" id="L13">@AllArgsConstructor</span>
+<span class="fc" id="L14">@NoArgsConstructor</span>
+public class TrackingNumberRequest {
+
+    @NotBlank(message = &quot;Origin country ID is required&quot;)
+    @Pattern(regexp = &quot;^[A-Z]{2}$&quot;, message = &quot;Invalid origin country ID format&quot;)
+<span class="fc" id="L19">    private String origin_country_id;</span>
+
+    @NotBlank(message = &quot;Destination country ID is required&quot;)
+    @Pattern(regexp = &quot;^[A-Z]{2}$&quot;, message = &quot;Invalid destination country ID format&quot;)
+<span class="fc" id="L23">    private String destination_country_id;</span>
+
+    @NotBlank(message = &quot;Weight is required&quot;)
+    @DecimalMin(value = &quot;0.001&quot;, message = &quot;Weight must be greater than 0&quot;)
+    @DecimalMax(value = &quot;1000.000&quot;, message = &quot;Weight must be less than or equal to 1000 kilograms&quot;)
+    @Digits(integer = 4, fraction = 3, message = &quot;Weight must be a valid decimal number with up to three decimal places&quot;)
+<span class="fc" id="L29">    private String weight;</span>
+
+    @NotNull(message = &quot;Created at timestamp is required&quot;)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+<span class="fc" id="L33">    private OffsetDateTime created_at;</span>
+
+    @NotNull(message = &quot;Customer ID is required&quot;)
+<span class="fc" id="L36">    private UUID customer_id;</span>
+
+    @NotBlank(message = &quot;Customer name is required&quot;)
+    @Size(max = 100, message = &quot;Customer name must be less than or equal to 100 characters&quot;)
+<span class="fc" id="L40">    private String customer_name;</span>
+
+    @NotBlank(message = &quot;Customer slug is required&quot;)
+    @Pattern(regexp = &quot;^[a-z0-9]+(?:-[a-z0-9]+)*$&quot;, message = &quot;Invalid customer slug format&quot;)
+<span class="fc" id="L44">    private String customer_slug;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
